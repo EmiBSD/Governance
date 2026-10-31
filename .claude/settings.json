@@ -1,0 +1,8 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(bundle -v)",
+      "Bash(bundle exec *)"
+    ]
+  }
+}
