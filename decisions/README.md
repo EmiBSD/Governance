@@ -42,3 +42,4 @@ Date: YYYY-MM-DD · Status: proposed | accepted | superseded by G-MMMM · Binds:
 | G-0013 | 2026-10-31 | proposed | Userland inherits OpenBSD's C in our layout; the Rust rewrite moves to `experimental` |
 | G-0014 | 2026-10-31 | proposed | LandingZone may name what grows from it, in its README only |
 | G-0015 | 2026-10-31 | accepted | One LLVM, upstream's, from the fork; nothing of OpenBSD in DevTools |
+| G-0016 | 2026-10-31 | accepted | EmiBSD's own target triple, `aarch64-unknown-emibsd`; the toolchains carry it as patches of ours |
