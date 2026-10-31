@@ -14,7 +14,7 @@ flowchart LR
         direction TB
         obsd["OpenBSD-src<br/>(openbsd/src)"]
         rust["rust<br/>(rust-lang/rust)"]
-        llvmrs["llvm-project<br/>the one LLVM: upstream tag llvmorg-22.1.6<br/>+ OpenBSD's patches, carried in DevTools"]
+        llvmrs["llvm-project<br/>upstream LLVM, tag llvmorg-22.1.6"]
         cargo["cargo<br/>(rust-lang/cargo)"]
     end
 
@@ -27,7 +27,6 @@ flowchart LR
         os["OS (R0)<br/>pins + sets + installer + release"]
     end
 
-    obsd -- "OpenBSD's LLVM patches and build glue" --> dev
     rust --> dev
     llvmrs -- "llvmorg-22.1.6" --> dev
     cargo -- "submodule src/tools/cargo" --> dev
@@ -58,8 +57,7 @@ publishes their state; neither feeds a build.
 | OpenBSD-src | Userland | the base system's C (`bin`, `sbin`, `usr.bin`, `usr.sbin`, `libexec`, `lib`, `include`, `etc`, `share/mk`) at LandingZone's pin, placed in our layout by `layout.toml`; the imported programs' sources | G-0013: the code is OpenBSD's, the order is ours; `gnu/` excluded |
 | LandingZone | Userland (dotted) | the pin, nothing else | one owner of the pin: it fixes the ABI the kernel implements; Userland refuses to build if its pin differs from Kernel's. LandingZone holds no userland code |
 | Kernel | Userland (dotted, later) | the ABI headers (`sys/*.h`, `machine/*.h`) exported from the `abi` crate | today they come from OpenBSD's `sys/` at the same pin, byte-identical by invariant 2 |
-| OpenBSD-src | DevTools | its changes to LLVM, derived as a patch series against the upstream tag; the build glue (`gnu/usr.bin/clang`, `gnu/lib/libcxx*`, `libclang_rt`) | the C of the base system keeps OpenBSD's patches (RETGUARD, `-fret-clean`, the fixed X18, BTI and PAC); the LLVM source itself is the fork's (G-0015) |
-| rust, llvm-project, cargo | DevTools | rust-lang/rust at the pinned stable tag with its `cargo` submodule; `llvm-project` at upstream's `llvmorg-22.1.6`, the one LLVM for the C and for rustc's backend | G-0015: one LLVM, built once; rustc links it through `llvm-config` and its own LLVM submodule goes unused |
+| rust, llvm-project, cargo | DevTools | rust-lang/rust at the pinned stable tag with its `cargo` submodule; upstream LLVM at `llvmorg-22.1.6` | the only inputs of DevTools; nothing comes from OpenBSD (G-0015). One LLVM, built with its own CMake, for the C and for rustc's backend |
 | LandingZone | Kernel | the tree at `lz-origin`, then every commit triaged as `lz-sync:` | Kernel redesigns what LandingZone ported; LandingZone never learns Kernel exists |
 | DevTools | Userland | OpenBSD's clang, lld and libc++ now; the Rust cross toolchain for `aarch64-unknown-openbsd` when a written program exists | the inherited C is built with the same compiler OpenBSD builds it with |
 | DevTools | Kernel | clang today (`just comp`, for the inherited userland the smokes boot); rustc once EmiBSD hosts its own build | the kernel itself needs only a stock stable toolchain, its target is `aarch64-unknown-none-softfloat` |
@@ -97,7 +95,8 @@ flowchart LR
 The pins are consistent: `Userland/compiler/rust/UPSTREAM.toml` names the `llvm-project` and
 `cargo` commits that rust's tag 1.98.1 carries as submodules, and both exist in the mirrors.
 
-- **DevTools** is `Userland/compiler/` and Kernel's `just comp` moved to their own repository.
+- **DevTools** is the toolchains from the forks alone: upstream LLVM and Rust; nothing of
+  OpenBSD enters it (G-0015). Kernel's `just comp` stays Kernel's.
 - **Userland after G-0013** is Kernel's `xtask userland` and `bsdmake.rs` given a home, with
   the C placed where `layout.py` already says, and the Rust proof of concept parked in the
   `experimental` branch.
@@ -109,7 +108,7 @@ The pins are consistent: `Userland/compiler/rust/UPSTREAM.toml` names the `llvm-
 ```mermaid
 flowchart TB
     T0["T0 · the DevTools repository<br/>moves Userland/compiler/, copies upstream.py,<br/>a recipe that pushes only the pinned tags to the mirrors"]
-    T1["T1 · OpenBSD's LLVM 22.1.6 built from DevTools<br/>moves Kernel's just comp<br/>proof: Kernel's smoke-install with that clang"]
+    T1["T1 · upstream LLVM 22.1.6 built from the fork with CMake<br/>host and aarch64-unknown-openbsd<br/>proof: Kernel's smoke-install with that clang"]
     U1["U1 · Userland: experimental branch, layout.toml,<br/>the materialiser, the build driver from Kernel<br/>proof: the 110 programs in the new layout boot Kernel's smokes"]
     U2["U2 · Userland: the other 408 directories build;<br/>base and comp sets from distrib/"]
     T2["T2 · rustc 1.98.1 with x.py, macOS host,<br/>target aarch64-unknown-openbsd, Userland's sysroot<br/>proof: a static Rust hello under Kernel in QEMU;<br/>needed only when a written program exists"]
