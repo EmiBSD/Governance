@@ -3,8 +3,9 @@
 One file per decision that crosses repositories, `G-NNNN-<slug>.md`, numbered in the order
 they were recorded, never renumbered, never deleted. Repository-internal decisions stay in
 that repository's log (Kernel numbers its own in `docs/PHASE2.md` and `docs/ZERO_UNSAFE.md`;
-Userland records its in `docs/PROGRAM.md` and its rules); a repository cites a decision here
-as `decision G-0007`.
+Userland records its in `docs/PROGRAM.md` and its rules; DevTools in `docs/DECISIONS.md` as
+`D-NNNN`). On 2026-10-31 the entries that belonged to one repository alone were removed from
+this log and live in that repository; the numbers are not reused.
 
 The first ten were recovered on 2026-10-31 from the repositories' rule files, where they had
 been recorded as "the user's decision of <date>"; the source lines are cited in each. The
@@ -35,11 +36,7 @@ Date: YYYY-MM-DD · Status: proposed | accepted | superseded by G-MMMM · Binds:
 | G-0006 | 2026-10-16 | accepted | `unsafe` is confined to one named crate per repository, counted and capped |
 | G-0007 | 2026-10-18 | accepted | arm64 first; amd64 frozen until N10 |
 | G-0008 | 2026-10-22 | accepted | The repositories are named for what they hold, under the EmiBSD organisation |
-| G-0009 | 2026-10-23 | accepted | The userland is written from scratch; two classes; LLVM and Rust imported, nothing GPL |
 | G-0010 | 2026-10-25 | accepted | The reference is read to write the specification and to settle gaps, never copied |
 | G-0011 | 2026-10-31 | accepted | A Governance repository holds what crosses repositories |
 | G-0012 | 2026-10-31 | proposed | DevTools and OS as repositories |
-| G-0013 | 2026-10-31 | proposed | Userland inherits OpenBSD's C in our layout; the Rust rewrite moves to `experimental` |
-| G-0014 | 2026-10-31 | proposed | LandingZone may name what grows from it, in its README only |
-| G-0015 | 2026-10-31 | accepted | One LLVM, upstream's, from the fork; nothing of OpenBSD in DevTools |
-| G-0016 | 2026-10-31 | accepted | EmiBSD's own target triple, `aarch64-unknown-emibsd`; the toolchains carry it as patches of ours |
+| G-0017 | 2026-10-31 | proposed | Governance looks at the repositories; no repository looks at Governance |

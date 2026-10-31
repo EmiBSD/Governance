@@ -10,7 +10,7 @@ redesigned loses its fidelity.
 ## Decision
 Three stages: OpenBSD, then the faithful file-by-file port (LandingZone, continuous), then the
 native system redesigned from it (Kernel). The userland of EmiBSD's own came later as a third
-phase (G-0009).
+phase.
 
 ## Consequences
 The port keeps OpenBSD's structure and names and never redesigns; the redesign never ports.

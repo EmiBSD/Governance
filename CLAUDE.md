@@ -1,15 +1,17 @@
-# EmiBSD workspace (`EmiBSD/Governance`)
+# EmiBSD Governance (`EmiBSD/Governance`)
 
-`Governance/` is the clone of **`EmiBSD/Governance`**: the rules, decisions and plans that
-govern every EmiBSD repository. The directory above it is the workspace that holds every
-clone side by side; it is not a repository, and it reads this file and `.claude/` through the
-symbolic links `../CLAUDE.md` and `../.claude`. EmiBSD is an
-experiment by Emilio Navarrete Lineros (enavarre@outlook.com): the OpenBSD kernel carried into
-Rust, first as a faithful file-by-file port and then redesigned so that the compiler, not a
-reviewer, rules out memory errors; then a userland written from scratch under one contract.
-The code is written by Claude Code agents under written rules; the maintainer takes every
-decision and approves every commit. Pre-alpha: boots only in QEMU on arm64 and runs OpenBSD's
-own userland unmodified. Public site: https://www.emibsd.org. GitHub: https://github.com/EmiBSD.
+`Governance/` is the clone of **`EmiBSD/Governance`**: what binds the rest. The invariants
+every repository obeys, the process, the architecture of the repositories, the roadmap across
+them, the decision log and the policies. Nothing else: what happens inside a repository is
+that repository's, written in its own files. The directory above this clone is the workspace
+that holds every clone side by side; it is not a repository and has no rules of its own.
+
+EmiBSD is an experiment by Emilio Navarrete Lineros (enavarre@outlook.com): the OpenBSD
+kernel carried into Rust, first as a faithful file-by-file port and then redesigned so that
+the compiler, not a reviewer, rules out memory errors; then a userland of its own. The code is
+written by Claude Code agents under written rules; the maintainer takes every decision and
+approves every commit. Pre-alpha: boots only in QEMU on arm64 and runs OpenBSD's own
+userland unmodified. Public site: https://www.emibsd.org. GitHub: https://github.com/EmiBSD.
 
 The user is answered in **Spanish**. Everything inside the repositories, this one included
 (code, comments, docs, commits), is in **English**.
@@ -18,35 +20,38 @@ The user is answered in **Spanish**. Everything inside the repositories, this on
 
 | Path | What |
 |---|---|
-| `CLAUDE.md`, `.claude/` | This file and the shared agent settings; `settings.local.json` is personal and ignored. |
-| `README.md` | What EmiBSD is and the map of repositories, for people. |
 | `docs/invariants.md` | The rules every repository obeys, with their reasons and sources. |
 | `docs/process.md` | How the work is done: agents write, the maintainer decides and approves. |
-| `docs/architecture.md` | The repositories, the forks and the flows between them, as diagrams; the DevTools and OS plan. |
-| `docs/roadmap.md` | The milestones of every repository on one page. |
-| `decisions/` | The decision log: one file per cross-repository decision, numbered and dated; repositories cite them as `decision G-0007`. |
+| `docs/architecture.md` | The repositories, the forks and the flows between them, as a diagram. |
+| `docs/roadmap.md` | The milestones of every repository on one page, read from the repositories. |
+| `decisions/` | The decision log: one file per decision that crosses repositories, `G-NNNN`, numbered and dated. |
 | `policies/` | Licences, dependencies, the disclosure of the AI process. |
+| `CLAUDE.md`, `.claude/` | This file and the agent settings; `settings.local.json` is personal and ignored. |
 
-What is decided here binds the other repositories; each repository's own `CLAUDE.md`,
-`.claude/rules/` and `README.md` are the rules inside it and may be stricter, never looser.
+What is decided here binds the other repositories. Each repository's own `CLAUDE.md`,
+rules and README are the rules inside it and may be stricter, never looser. A repository
+does not read, link or cite this one: a decision reaches it as text of its own, carried
+there only on the maintainer's explicit OK (G-0017, proposed). DevTools keeps its own
+log, `docs/DECISIONS.md`, numbered `D-NNNN`.
 
-## The other clones, beside this one
+## The repositories
 
-The clones below sit next to `Governance/` in the workspace, each with its own git. Read a
-repository's `CLAUDE.md` before touching it; its rules apply inside it.
+The clones sit next to `Governance/` in the workspace, each with its own git and its own
+rules. A session that works in one starts from its root and reads its files alone; only a
+session started here reads across them. `docs/architecture.md` has the flows.
 
-| Folder | GitHub | What it is |
+| Folder | GitHub | One line |
 |---|---|---|
-| `LandingZone/` | `EmiBSD/LandingZone` (formerly EmiBSD.LZ) | Phase 1: the 1:1 port of the OpenBSD kernel, one C file to one Rust file, keeping OpenBSD's structure and names. The C under `reference/openbsd-src/` is the specification and is read-only. Milestones M0..Mn. Keeps porting after Kernel split from it. |
-| `Kernel/` | `EmiBSD/Kernel` | Phase 2: started from LandingZone's tree on 2026-10-09 and redesigns it subsystem by subsystem into four crates: `kernel` and `abi` (`#![forbid(unsafe_code)]`), `hal` (the only crate with `unsafe`, each site with a `// SAFETY:` proof) and `bsd` (the inherited tree, deleted at N9). Milestones N0..N12; `lineage.toml` records where every file and function came from. Every LandingZone commit is triaged here (`lz-sync:` commits). amd64 is frozen until N10; arm64 only. |
-| `Userland/` | `EmiBSD/Userland` | Phase 3: EmiBSD's own userland, written from scratch in Rust under one contract (`docs/PROGRAM.md`): a program is a query over records with a schema, `-o` picks the renderer, `--request` takes JSON. Two classes: *written* (from scratch, never a port or translation) and *imported* (ssh, LibreSSL, the compilers, ... compiled from their upstream pin, never rewritten). `catastro.md` lists every program and its state. |
-| `Website/` | `EmiBSD/Website` (formerly Portal, renamed 2026-10-31) | The public site www.emibsd.org: plain Jekyll on GitHub Pages behind Cloudflare, no theme. `_data/status.json` holds the milestone and `unsafe` figures; `_data/news.json` is the devlog. |
-| `DevTools/` | `EmiBSD/DevTools` | The toolchains, imported and built once from the forks alone: upstream LLVM (`llvmorg-22.1.6`, clang, lld, libc++, compiler-rt) and rust-lang/rust at a pinned stable tag (rustc, cargo, `std` for `aarch64-unknown-openbsd`). One LLVM for the C and for rustc; nothing from OpenBSD enters it (G-0015). Created 2026-10-31 (G-0012); milestones T0..T4. |
-| `OS/` | `EmiBSD/OS` | The assembly and the releases: `MANIFEST.toml` pins one commit of Kernel, Userland and DevTools and records the OpenBSD pin Kernel and Userland share; the recipes fetch, delegate the builds, assemble the sets and media, boot and tag `YEAR.MONTH`. Builds nothing of its own. Created 2026-10-31 (G-0012); milestones R0..R2. |
+| `LandingZone/` | `EmiBSD/LandingZone` | Phase 1: the 1:1 port of the OpenBSD kernel to Rust, file by file. Milestones M. |
+| `Kernel/` | `EmiBSD/Kernel` | Phase 2: the redesign of that port into `kernel`, `abi`, `hal` and the inherited `bsd`. Milestones N. |
+| `Userland/` | `EmiBSD/Userland` | Phase 3: the base system above the kernel. Milestones U. |
+| `DevTools/` | `EmiBSD/DevTools` | The toolchains, built from the forks and released as artifacts. Milestones T. |
+| `OS/` | `EmiBSD/OS` | The assembly and the releases: a manifest of pins, the sets, the media, the `YEAR.MONTH` tag. Milestones R. |
+| `Website/` | `EmiBSD/Website` | The public site www.emibsd.org. |
 
-Forks in the organisation (`OpenBSD-src`, `rust`, `llvm-project` from rust-lang, `cargo`) are
-read-only mirrors: no commit of ours lands on them, only the upstream tags the pins name; our
-patches live in the consuming repository's `patches/`.
+Forks in the organisation (`OpenBSD-src`, `rust`, `llvm-project`, `cargo` and the other
+mirrors DevTools pins) are read-only: no commit of ours lands on them; our patches live in
+the consuming repository.
 
 ## Loose files in the workspace
 
@@ -69,18 +74,21 @@ read into a reply or sent anywhere; a credential file is never opened.
 - Green `just ci` is the definition of done; milestones close with the scripted QEMU boots
   (the smokes) and `diff-openbsd` against a real OpenBSD.
 - Kernel reads LandingZone, never the reverse: LandingZone's code, rules and agents never name
-  Kernel or adapt to it; only its README may say what grows from it (G-0014).
+  Kernel or adapt to it; only its README may say what grows from it.
 - EmiBSD is not affiliated with or endorsed by the OpenBSD project, and says so wherever it
   presents itself.
 
 ## Working here
 
-- Work inside one repository at a time, from its own root, with its own `just` recipes; the
-  workspace root has no build, no tests and no git. This repository has no build either; its
-  check is that every link and every cited decision resolves.
+- This repository has no build; its check is that every link and every cited decision
+  resolves. Nothing here is edited from a session working in another repository.
 - A decision that crosses repositories is a new file in `decisions/` (`decisions/README.md`
-  has the format), proposed by the agent, accepted by the maintainer, then cited from the
-  repositories it binds. A repository-internal decision stays in that repository's log.
+  has the format), proposed by the agent, accepted by the maintainer. A decision internal to
+  one repository stays in that repository and is not recorded here. The maintainer is asked
+  before any decision is written as accepted, before any status changes, and before anything
+  is carried into another repository.
+- When this repository and a repository disagree about that repository, the repository is
+  right and this one is updated.
 - Commit on the user's "dale", push on "súbelo"; never push otherwise. Commits:
   `<area>: <imperative summary>`, the body says what and why, then the session's
   `Co-Authored-By:` line.

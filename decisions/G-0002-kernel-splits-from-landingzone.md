@@ -1,6 +1,6 @@
 # G-0002: Kernel splits from LandingZone; LandingZone never learns of it
 
-Date: 2026-10-09 · Status: accepted; superseded in one point by G-0014 (LandingZone's README may name its consumers) · Binds: LandingZone, Kernel
+Date: 2026-10-09 · Status: accepted; relaxed in one point on 2026-10-31: LandingZone's README alone may name what grows from it · Binds: LandingZone, Kernel
 
 ## Context
 The port had reached M14 (installable). The redesign needed a tree to start from and a way to

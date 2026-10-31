@@ -10,8 +10,8 @@ author's block. C is never copied verbatim; the derivation is a port or a redesi
 behaviour, and `lineage.toml` (Kernel) or `ports.toml` (LandingZone) records it.
 
 ## Written userland programs
-Owe nothing to anyone: written from a specification, nothing copied or translated (G-0009,
-G-0010). They carry only the author's block.
+Owe nothing to anyone: written from a specification, nothing copied or translated
+(G-0010). They carry only the author's block.
 
 ## Imported programs and dependencies
 | Licence | Status |

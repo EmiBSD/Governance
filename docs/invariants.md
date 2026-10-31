@@ -9,7 +9,7 @@ looser. Each entry says what, why, and where it is enforced; the compressed list
 When the Rust differs from OpenBSD, the Rust is wrong. For the kernel the C under
 `reference/openbsd-src` at the pin is the specification and is read-only; for the userland
 OpenBSD's manuals and code are read to write a program's specification, and the program is
-written from that specification (decision G-0009, G-0010).
+written from that specification (decision G-0010).
 
 **Why:** the project's claim is a system that behaves as OpenBSD does, with the memory errors
 ruled out by the compiler. A behaviour that drifts cannot be verified against anything.
@@ -80,8 +80,8 @@ milestone left open.
 
 OpenBSD feeds LandingZone, Userland and DevTools. LandingZone feeds Kernel; Kernel reads it
 and never writes to it, and nothing in LandingZone's code, rules or agents names Kernel or
-adapts to it. Its README alone may say what grows from it (G-0014, relaxing G-0002 in that
-one point). DevTools feeds Userland, Kernel and OS and knows nothing of their internals: it
+adapts to it. Its README alone may say what grows from it (G-0002, relaxed in that one point
+on 2026-10-31). DevTools feeds Userland, Kernel and OS and knows nothing of their internals: it
 takes a sysroot as an input. Kernel and Userland feed OS (`docs/architecture.md`).
 
 **Why:** the port stays a faithful port, checkable against the C alone; the toolchain stays

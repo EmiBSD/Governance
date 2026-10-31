@@ -2,20 +2,21 @@
 
 State as of 2026-10-31. Each repository keeps the authoritative detail (LandingZone's
 `README.md`, Kernel's `docs/ROADMAP.md` and `docs/STATUS.md`, Userland's `catastro.md`,
-Website's `_data/status.json`); this page is the view across them.
+DevTools' `CLAUDE.md`, OS's `docs/RELEASE.md`, Website's `_data/status.json`); this page is
+the view across them and is updated by reading them.
 
 ```mermaid
 flowchart LR
-    P1["Phase 1 · LandingZone<br/>M0..M16 met, keeps porting<br/>(drivers, platforms)"]
-    P2["Phase 2 · Kernel<br/>N0..N4 met · N5 VFS in progress<br/>N6 net · N7 devices · N8 security<br/>N9 bsd/ deleted · N10 amd64<br/>N11 verification · N12 performance"]
-    P3["Phase 3 · Userland (G-0013 proposed)<br/>U1 the 110 programs in our layout<br/>U2 the whole base system builds<br/>written programs one at a time"]
-    PT["DevTools (proposed)<br/>T0 repo · T1 clang · T2 rustc cross<br/>T3 releases · T4 self-hosted"]
-    PR["OS<br/>R0 the pinned Kernel boots from the manifest<br/>R1 YEAR.MONTH releases"]
+    P1["Phase 1 · LandingZone<br/>M0..M16 met, keeps porting"]
+    P2["Phase 2 · Kernel<br/>N0..N4 met · N5 VFS in progress<br/>N6..N12 ahead"]
+    P3["Phase 3 · Userland<br/>the base system above the kernel<br/>milestones U"]
+    PT["DevTools<br/>T0 met · T1 built on the host<br/>T2..T4 ahead"]
+    PR["OS<br/>R0 the pinned Kernel boots from the manifest<br/>R1 the first YEAR.MONTH · R2 amd64"]
 
     P1 -- "lz-sync, continuous" --> P2
     P2 -- "N9: a kernel with no inherited tree" --> PR
     P3 -- "a bootable base set" --> PR
-    PT -- "T1: clang" --> P3
+    PT -- "the toolchain" --> P3
     PT -- "T4 after N9" --> P2
 ```
 
@@ -44,27 +45,25 @@ every commit is triaged into Kernel as `lz-sync:`.
 | N11 Verification | semantic `unsafe` count, idiomaticity, OpenBSD's regress | |
 | N12 Performance | the slowdowns left open after N3 | started early |
 
-## Phase 3: Userland (U, proposed in G-0013)
+## Phase 3: Userland (U)
 
-Until G-0013 is decided, Userland is the Rust proof of concept: `ls` and `cp` designed on the
-shared crates `cli` and `sys`, the rest planned in `catastro.md`. Under G-0013 it becomes
-OpenBSD's base system in our layout, three classes (inherited, imported, written), and its
-milestones are: U1 the 110 programs Kernel builds today, in the new layout, booting Kernel's
-smokes (needs DevTools T1); U2 the whole base system builds, `base` and `comp` sets from
-`distrib/` (OS is created); then written programs one at a time, each needing DevTools T2.
+The base system above the kernel. Its plan, classes of program and milestones are Userland's
+(`catastro.md`, `docs/PROGRAM.md`, its README). What the rest waits for: a bootable `base`
+set, which is OS's R1.
 
-## DevTools (T, proposed)
+## DevTools (T)
 
-T0 the repository, T1 upstream LLVM 22.1.6 from the fork with CMake, T2 rustc cross for `aarch64-unknown-openbsd`, T3
-releases, T4 self-hosted. Detail in `docs/architecture.md`.
+T0 the repository, met 2026-10-31. T1 the C toolchain, built and checked on the host the same
+day, its QEMU proof pending. T2 the Rust toolchain. T3 releases as artifacts. T4 self-hosted,
+after Kernel's N9. Detail in DevTools.
 
 ## OS (R)
 
 Created 2026-10-31. R0: the manifest of pins and the pinned Kernel's image and smokes from a
-clean clone, possible today. R1 at Userland's first bootable `base` set: the sets, the media,
-`diff-openbsd`, the first `YEAR.MONTH` tag. R2: amd64 after N10. Each release is a tag over a
-manifest commit whose assembled pins boot and pass.
+clean clone. R1 at Userland's first bootable `base` set: the sets, the media, `diff-openbsd`,
+the first `YEAR.MONTH` tag. R2: amd64 after N10. Each release is a tag over a manifest commit
+whose assembled pins boot and pass.
 
 ## Website
 
-Follows the rest: `status.json` at every milestone, a devlog entry at every close and at T2.
+Follows the rest: `status.json` at every milestone, a devlog entry at every close.

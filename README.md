@@ -10,7 +10,7 @@
 
 <p align="center">
   <a href="LICENSE"><img src="https://img.shields.io/badge/license-ISC-007ec6" alt="License: ISC"></a>
-  <a href="decisions/"><img src="https://img.shields.io/badge/decisions-G--0001..G--0014-007ec6" alt="Decisions: G-0001 to G-0014"></a>
+  <a href="decisions/"><img src="https://img.shields.io/badge/decisions-G--0001..G--0017-007ec6" alt="Decisions: G-0001 to G-0017"></a>
   <a href="https://www.emibsd.org"><img src="https://img.shields.io/badge/website-emibsd.org-9f9f9f" alt="Website: www.emibsd.org"></a>
 </p>
 
@@ -70,7 +70,7 @@ profile and the community health files (security policy, contributing).
 |---|---|
 | [`docs/invariants.md`](docs/invariants.md) | The rules every repository obeys, with their reasons. |
 | [`docs/process.md`](docs/process.md) | How the work is done: agents write, the maintainer decides and approves. |
-| [`docs/architecture.md`](docs/architecture.md) | The repositories, the forks and the flows between them; the DevTools and OS plan. |
+| [`docs/architecture.md`](docs/architecture.md) | The repositories, the forks and the flows between them. |
 | [`docs/roadmap.md`](docs/roadmap.md) | The milestones of every repository on one page. |
 | [`decisions/`](decisions/) | The decision log: one file per cross-repository decision, numbered `G-NNNN` and dated. |
 | [`policies/`](policies/) | [Licences](policies/licences.md), [dependencies](policies/dependencies.md), [AI disclosure](policies/ai-disclosure.md). |
@@ -84,12 +84,14 @@ profile and the community health files (security policy, contributing).
    status `proposed`. It never takes the decision.
 3. The maintainer decides, in conversation; the file records the decision, its date and its
    consequences, status `accepted`.
-4. The repositories it binds cite it by number in their rules, and follow it.
+4. The repositories it binds follow it. It reaches them as text of their own, carried there
+   on the maintainer's explicit OK; no repository links or cites this one (G-0017, proposed).
 5. A later decision that replaces it sets it to `superseded` and points forward; nothing is
    deleted from the log.
 
 Repository-internal decisions stay in that repository's own log (Kernel's `docs/PHASE2.md`,
-Userland's `docs/PROGRAM.md`); this log is for what crosses them.
+Userland's `docs/PROGRAM.md`, DevTools' `docs/DECISIONS.md`); this log is for what crosses them,
+and nothing more: what a repository does inside itself is described in that repository.
 
 ## Licence
 

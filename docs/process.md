@@ -46,8 +46,9 @@ devlog follow.
 ## Decisions
 
 A decision that crosses repositories goes in `decisions/` (`decisions/README.md` has the
-format); a repository-internal one stays in that repository's log. Repositories cite the
-cross-repository ones by number.
+format); a repository-internal one stays in that repository's log and is not recorded here.
+No repository reads, links or cites this one: a decision reaches a repository as text of its
+own, carried there on the maintainer's explicit OK (G-0017, proposed).
 
 ## Reviews
 
