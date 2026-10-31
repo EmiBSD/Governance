@@ -1,6 +1,6 @@
 # G-0009: The userland is written from scratch; two classes; LLVM and Rust imported, nothing GPL
 
-Date: 2026-10-23 · Status: accepted · Binds: Userland, DevTools, OS
+Date: 2026-10-23 · Status: accepted; the two-LLVMs clause superseded by G-0015 · Binds: Userland, DevTools, OS
 
 ## Context
 With the kernel running OpenBSD's userland unmodified, the question was whether EmiBSD's own

@@ -27,7 +27,7 @@ flowchart LR
         os["OS (R0)<br/>pins + sets + installer + release"]
     end
 
-    obsd -- "gnu/llvm 18 with OpenBSD's patches" --> dev
+    obsd -- "gnu/llvm 22.1.6 with OpenBSD's patches" --> dev
     rust --> dev
     llvmrs -- "submodule src/llvm-project" --> dev
     cargo -- "submodule src/tools/cargo" --> dev
@@ -58,8 +58,8 @@ publishes their state; neither feeds a build.
 | OpenBSD-src | Userland | the base system's C (`bin`, `sbin`, `usr.bin`, `usr.sbin`, `libexec`, `lib`, `include`, `etc`, `share/mk`) at LandingZone's pin, placed in our layout by `layout.toml`; the imported programs' sources | G-0013: the code is OpenBSD's, the order is ours; `gnu/` excluded |
 | LandingZone | Userland (dotted) | the pin, nothing else | one owner of the pin: it fixes the ABI the kernel implements; Userland refuses to build if its pin differs from Kernel's. LandingZone holds no userland code |
 | Kernel | Userland (dotted, later) | the ABI headers (`sys/*.h`, `machine/*.h`) exported from the `abi` crate | today they come from OpenBSD's `sys/` at the same pin, byte-identical by invariant 2 |
-| OpenBSD-src | DevTools | `gnu/llvm`, `gnu/usr.bin/clang`, `gnu/lib/libcxx*`, `libclang_rt`, `libcompiler_rt` | the system's clang, lld and libc++ are OpenBSD's LLVM 18 with its patches (RETGUARD, `-fret-clean`, the fixed X18, BTI and PAC defaults) |
-| rust, llvm-project, cargo | DevTools | rust-lang/rust at the pinned stable tag with its two submodules | rustc 1.98.1 needs LLVM 21 and builds the one in its submodule; OpenBSD's 18 stays for the C. Two LLVMs, decided 2026-10-23 |
+| OpenBSD-src | DevTools | `gnu/llvm`, `gnu/usr.bin/clang`, `gnu/lib/libcxx*`, `libclang_rt`, `libcompiler_rt` | the system's clang, lld and libc++ are OpenBSD's LLVM, 22.1.6 at the pin, with its patches (RETGUARD, `-fret-clean`, the fixed X18, BTI and PAC defaults) |
+| rust, llvm-project, cargo | DevTools | rust-lang/rust at the pinned stable tag with its two submodules | rustc 1.98.1 needs LLVM 21 or newer and, by the decision of 2026-10-23, builds the one in its submodule. That decision assumed OpenBSD's LLVM was 18.1.8; at the pin it is 22.1.6, so G-0015 proposes one LLVM, OpenBSD's |
 | LandingZone | Kernel | the tree at `lz-origin`, then every commit triaged as `lz-sync:` | Kernel redesigns what LandingZone ported; LandingZone never learns Kernel exists |
 | DevTools | Userland | OpenBSD's clang, lld and libc++ now; the Rust cross toolchain for `aarch64-unknown-openbsd` when a written program exists | the inherited C is built with the same compiler OpenBSD builds it with |
 | DevTools | Kernel | clang today (`just comp`, for the inherited userland the smokes boot); rustc once EmiBSD hosts its own build | the kernel itself needs only a stock stable toolchain, its target is `aarch64-unknown-none-softfloat` |
@@ -109,7 +109,7 @@ The pins are consistent: `Userland/compiler/rust/UPSTREAM.toml` names the `llvm-
 ```mermaid
 flowchart TB
     T0["T0 · the DevTools repository<br/>moves Userland/compiler/, copies upstream.py,<br/>a recipe that pushes only the pinned tags to the mirrors"]
-    T1["T1 · OpenBSD's LLVM 18 built from DevTools<br/>moves Kernel's just comp<br/>proof: Kernel's smoke-install with that clang"]
+    T1["T1 · OpenBSD's LLVM 22.1.6 built from DevTools<br/>moves Kernel's just comp<br/>proof: Kernel's smoke-install with that clang"]
     U1["U1 · Userland: experimental branch, layout.toml,<br/>the materialiser, the build driver from Kernel<br/>proof: the 110 programs in the new layout boot Kernel's smokes"]
     U2["U2 · Userland: the other 408 directories build;<br/>base and comp sets from distrib/"]
     T2["T2 · rustc 1.98.1 with x.py, macOS host,<br/>target aarch64-unknown-openbsd, Userland's sysroot<br/>proof: a static Rust hello under Kernel in QEMU;<br/>needed only when a written program exists"]

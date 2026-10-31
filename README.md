@@ -40,11 +40,11 @@ flowchart LR
     end
     subgraph repos["Repositories"]
         direction LR
-        dev["DevTools (planned)"]
+        dev["DevTools"]
         lz["LandingZone"]
         ul["Userland"]
         k["Kernel"]
-        os["OS (planned)"]
+        os["OS"]
     end
     obsd --> dev
     rust --> dev
