@@ -35,7 +35,7 @@ flowchart LR
         direction TB
         obsd["OpenBSD-src"]
         rust["rust"]
-        llvmrs["llvm-project (rust-lang)"]
+        llvmrs["llvm-project"]
         cargo["cargo"]
     end
     subgraph repos["Repositories"]

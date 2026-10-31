@@ -59,7 +59,7 @@ publishes their state; neither feeds a build.
 | Kernel | Userland (dotted, later) | the ABI headers (`sys/*.h`, `machine/*.h`) exported from the `abi` crate | today they come from OpenBSD's `sys/` at the same pin, byte-identical by invariant 2 |
 | rust, llvm-project, cargo | DevTools | rust-lang/rust at the pinned stable tag with its `cargo` submodule; upstream LLVM at `llvmorg-22.1.6` | the only inputs of DevTools; nothing comes from OpenBSD (G-0015). One LLVM, built with its own CMake, for the C and for rustc's backend |
 | LandingZone | Kernel | the tree at `lz-origin`, then every commit triaged as `lz-sync:` | Kernel redesigns what LandingZone ported; LandingZone never learns Kernel exists |
-| DevTools | Userland | OpenBSD's clang, lld and libc++ now; the Rust cross toolchain for `aarch64-unknown-openbsd` when a written program exists | the inherited C is built with the same compiler OpenBSD builds it with |
+| DevTools | Userland | clang, lld and libc++ from upstream LLVM 22.1.6; the Rust cross toolchain for `aarch64-unknown-openbsd` when a written program exists | one toolchain for the whole base system; what OpenBSD's build glue passed to its own patched clang is adapted in Userland, where that C is built |
 | DevTools | Kernel | clang today (`just comp`, for the inherited userland the smokes boot); rustc once EmiBSD hosts its own build | the kernel itself needs only a stock stable toolchain, its target is `aarch64-unknown-none-softfloat` |
 | Userland | DevTools (dotted) | the sysroot: libc, crt, headers | a binary the toolchain produces needs a libc; with G-0013 it is OpenBSD's libc from Userland's own tree from day one. `std`'s rlibs are compiled without one, so the cycle breaks there |
 | Kernel, Userland, DevTools | OS | a kernel image, the installed tree, the comp set | OS assembles and releases; it builds nothing of its own |
@@ -72,7 +72,7 @@ flowchart LR
         direction TB
         obsd["OpenBSD-src"]
         rust["rust"]
-        llvmrs["llvm-project (rust-lang)"]
+        llvmrs["llvm-project"]
         cargo["cargo"]
     end
 

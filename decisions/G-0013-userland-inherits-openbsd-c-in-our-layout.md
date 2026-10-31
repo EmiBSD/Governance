@@ -59,7 +59,7 @@ it has no home of its own and no order.
   becomes a class; the imported class and "nothing GPL" stand. `docs/PROGRAM.md`'s contract
   (records, `-o`, `--request`) applies to written programs only and lives in `experimental`
   until one is written again.
-- DevTools' order changes: T1 (OpenBSD's clang) is what Userland needs now; T2 (rustc cross)
+- DevTools' order changes: T1 (the clang of upstream LLVM, G-0015) is what Userland needs now; T2 (rustc cross)
   waits for the first written program.
 - Kernel's invariant "OpenBSD's userland runs unmodified" stays literally true: the binaries
   are the same C, built from the same pin, in a different order on disk.

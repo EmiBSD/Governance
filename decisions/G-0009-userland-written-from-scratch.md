@@ -13,7 +13,8 @@ specification, `#![forbid(unsafe_code)]`) and *imported* (cryptography, the netw
 the compilers: compiled from a pinned upstream, patched, never rewritten). The toolchains are
 imported: LLVM as OpenBSD ships it for the C, rust-lang/rust at a pinned stable tag built with
 its own LLVM submodule (two LLVMs), so the `*-unknown-openbsd` targets get their `std` from a
-stable release without nightly. Nothing GPL enters the tree.
+stable release without nightly. Nothing GPL enters the tree. (The toolchain clause is
+superseded by G-0015: one LLVM, upstream's, from the fork; nothing of OpenBSD in DevTools.)
 
 ## Consequences
 `catastro.md` lists every program and its class; the forks `rust`, `llvm-project`, `cargo` and

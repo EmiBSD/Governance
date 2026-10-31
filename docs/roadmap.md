@@ -55,7 +55,7 @@ smokes (needs DevTools T1); U2 the whole base system builds, `base` and `comp` s
 
 ## DevTools (T, proposed)
 
-T0 the repository, T1 OpenBSD's LLVM, T2 rustc cross for `aarch64-unknown-openbsd`, T3
+T0 the repository, T1 upstream LLVM 22.1.6 from the fork with CMake, T2 rustc cross for `aarch64-unknown-openbsd`, T3
 releases, T4 self-hosted. Detail in `docs/architecture.md`.
 
 ## OS (R)
