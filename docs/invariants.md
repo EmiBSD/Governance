@@ -78,12 +78,14 @@ milestone left open.
 
 ## 7. The repositories read in one direction
 
-OpenBSD feeds LandingZone, Userland and DevTools. LandingZone feeds Kernel and never learns
-that Kernel exists. DevTools feeds Userland, Kernel and OS and knows nothing of their
-internals: it takes a sysroot as an input. Kernel and Userland feed OS (`docs/architecture.md`).
+OpenBSD feeds LandingZone, Userland and DevTools. LandingZone feeds Kernel; Kernel reads it
+and never writes to it, and nothing in LandingZone's code, rules or agents names Kernel or
+adapts to it. Its README alone may say what grows from it (G-0014, relaxing G-0002 in that
+one point). DevTools feeds Userland, Kernel and OS and knows nothing of their internals: it
+takes a sysroot as an input. Kernel and Userland feed OS (`docs/architecture.md`).
 
-**Why:** the port stays a faithful port; the toolchain stays reusable; a cycle would make the
-first self-hosted build impossible to explain.
+**Why:** the port stays a faithful port, checkable against the C alone; the toolchain stays
+reusable; a cycle would make the first self-hosted build impossible to explain.
 
 ## 8. Not affiliated with OpenBSD
 

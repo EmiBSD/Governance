@@ -1,5 +1,19 @@
 # EmiBSD Governance
 
+<p align="center">
+  <img src="docs/Ferffy.jpg" alt="Ferffy, the EmiBSD mascot: a spiky orange crab in front of a shield, above the EmiBSD name" width="380">
+</p>
+
+<p align="center"><em>Ferffy, the EmiBSD mascot: the child of Ferris (Rust's crab) and Puffy (OpenBSD's pufferfish).</em></p>
+
+<p align="center"><strong>The rules, decisions and plans that bind every EmiBSD repository.</strong></p>
+
+<p align="center">
+  <a href="LICENSE"><img src="https://img.shields.io/badge/license-ISC-007ec6" alt="License: ISC"></a>
+  <a href="decisions/"><img src="https://img.shields.io/badge/decisions-G--0001..G--0014-007ec6" alt="Decisions: G-0001 to G-0014"></a>
+  <a href="https://www.emibsd.org"><img src="https://img.shields.io/badge/website-emibsd.org-9f9f9f" alt="Website: www.emibsd.org"></a>
+</p>
+
 The rules, decisions and plans that govern every repository of [EmiBSD](https://www.emibsd.org),
 and the workspace that holds their clones.
 

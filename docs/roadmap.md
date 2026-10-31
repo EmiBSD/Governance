@@ -10,7 +10,7 @@ flowchart LR
     P2["Phase 2 · Kernel<br/>N0..N4 met · N5 VFS in progress<br/>N6 net · N7 devices · N8 security<br/>N9 bsd/ deleted · N10 amd64<br/>N11 verification · N12 performance"]
     P3["Phase 3 · Userland (G-0013 proposed)<br/>U1 the 110 programs in our layout<br/>U2 the whole base system builds<br/>written programs one at a time"]
     PT["DevTools (proposed)<br/>T0 repo · T1 clang · T2 rustc cross<br/>T3 releases · T4 self-hosted"]
-    PR["OS (proposed)<br/>R0 at the first bootable base set<br/>YEAR.MONTH releases"]
+    PR["OS<br/>R0 the pinned Kernel boots from the manifest<br/>R1 YEAR.MONTH releases"]
 
     P1 -- "lz-sync, continuous" --> P2
     P2 -- "N9: a kernel with no inherited tree" --> PR
@@ -58,10 +58,12 @@ smokes (needs DevTools T1); U2 the whole base system builds, `base` and `comp` s
 T0 the repository, T1 OpenBSD's LLVM, T2 rustc cross for `aarch64-unknown-openbsd`, T3
 releases, T4 self-hosted. Detail in `docs/architecture.md`.
 
-## OS (R, proposed)
+## OS (R)
 
-Created at the first bootable base set. Each release is a `YEAR.MONTH` tag over a manifest of
-pins, with the sets, the media, the smokes of the whole system and `diff-openbsd` green.
+Created 2026-10-31. R0: the manifest of pins and the pinned Kernel's image and smokes from a
+clean clone, possible today. R1 at Userland's first bootable `base` set: the sets, the media,
+`diff-openbsd`, the first `YEAR.MONTH` tag. R2: amd64 after N10. Each release is a tag over a
+manifest commit whose assembled pins boot and pass.
 
 ## Website
 

@@ -21,9 +21,13 @@ repository assembling Kernel and Userland. `docs/architecture.md` is the worked 
   maintainer and T0 started the same day (the pins copied from `Userland/compiler/`, the
   tools, the mirror check). `Userland/compiler/` is removed when Userland's `main` restarts
   under G-0013, not before.
+- 2026-10-31: **OS now**, not at the first release: the repository `EmiBSD/OS` was created by
+  the maintainer the same day, thin, with the manifest of pins (which already states a
+  reproducible system: Kernel 2c1d8144 on OpenBSD's userland), the release checklist and the
+  milestones R0..R2; it builds nothing of its own.
 
 ## Open (the maintainer's)
-The scope (lldb?), hosts, and when OS is created. Listed at
+The scope of DevTools (lldb?) and its hosts. Listed at
 the end of `docs/architecture.md`. This file becomes `accepted` with the answers recorded.
 
 ## Sources

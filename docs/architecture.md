@@ -24,7 +24,7 @@ flowchart LR
         lz["LandingZone<br/>the 1:1 port of the kernel"]
         ul["Userland<br/>OpenBSD's C in our layout<br/>(inherited, imported, written)"]
         k["Kernel<br/>the redesign in four crates"]
-        os["OS<br/>pins + sets + installer + release"]
+        os["OS (R0)<br/>pins + sets + installer + release"]
     end
 
     obsd -- "gnu/llvm 18 with OpenBSD's patches" --> dev
@@ -115,7 +115,7 @@ flowchart TB
     T2["T2 · rustc 1.98.1 with x.py, macOS host,<br/>target aarch64-unknown-openbsd, Userland's sysroot<br/>proof: a static Rust hello under Kernel in QEMU;<br/>needed only when a written program exists"]
     T3["T3 · GitHub releases: one tarball per host + sha256<br/>version 1.98.1+emibsd.1; Userland runs just toolchain<br/>cve.py watches llvm and rust"]
     T4["T4 · self-hosting: rustc built on EmiBSD<br/>stage0 = T3; after N9"]
-    R0["OS · created when Userland has a bootable base set<br/>manifest of pins (Kernel, Userland, DevTools),<br/>sets, installer, smokes of the whole system,<br/>diff-openbsd, the YEAR.MONTH tag, the Website's status.json"]
+    R0["OS · R0: the manifest of pins, the pinned Kernel's image<br/>and smokes from a clean clone (possible today)<br/>R1 at Userland's bootable base set: sets, installer,<br/>diff-openbsd, the YEAR.MONTH tag, the Website's status.json"]
 
     T0 --> T1 --> U1 --> U2 --> R0
     T1 --> T3 --> T4
@@ -141,6 +141,6 @@ a program written for EmiBSD runs on its kernel. Both deserve a devlog entry.
 3. `compiler/` leaves Userland entirely; `distrib/sets` lists the comp set from DevTools' artifacts.
 4. Kernel's `just comp` moves to DevTools now.
 5. Hosts: macOS arm64 first; Linux x86_64 only if Userland's CI needs it; arm64 OpenBSD at T4.
-6. OS now or at the first release; its name: OS, Release or System.
+6. ~~OS now or at the first release~~: now, as `OS`, decided 2026-10-31; the repository exists.
 7. G-0013's four: the inherited C committed or fetched; Kernel keeps its own userland build
    until N9; Perl in or out; Userland's milestone letter and its first milestone.

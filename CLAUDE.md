@@ -68,7 +68,8 @@ read into a reply or sent anywhere; a credential file is never opened.
   and installs need the maintainer's OK.
 - Green `just ci` is the definition of done; milestones close with the scripted QEMU boots
   (the smokes) and `diff-openbsd` against a real OpenBSD.
-- LandingZone must never learn that Kernel exists: Kernel reads LandingZone, never the reverse.
+- Kernel reads LandingZone, never the reverse: LandingZone's code, rules and agents never name
+  Kernel or adapt to it; only its README may say what grows from it (G-0014).
 - EmiBSD is not affiliated with or endorsed by the OpenBSD project, and says so wherever it
   presents itself.
 
