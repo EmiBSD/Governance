@@ -42,7 +42,7 @@ repository's `CLAUDE.md` before touching it; its rules apply inside it.
 | `Userland/` | `EmiBSD/Userland` | Phase 3: EmiBSD's own userland, written from scratch in Rust under one contract (`docs/PROGRAM.md`): a program is a query over records with a schema, `-o` picks the renderer, `--request` takes JSON. Two classes: *written* (from scratch, never a port or translation) and *imported* (ssh, LibreSSL, the compilers, ... compiled from their upstream pin, never rewritten). `catastro.md` lists every program and its state. |
 | `Website/` | `EmiBSD/Website` (formerly Portal, renamed 2026-10-31) | The public site www.emibsd.org: plain Jekyll on GitHub Pages behind Cloudflare, no theme. `_data/status.json` holds the milestone and `unsafe` figures; `_data/news.json` is the devlog. |
 | `DevTools/` | `EmiBSD/DevTools` | The toolchains, both imported: clang/lld/libc++ from OpenBSD's LLVM and rustc/cargo/std from the pinned stable Rust, built once and released as artifacts the other repositories consume. Created 2026-10-31 (G-0012, the name decided); milestones T0..T4. Its definitions came from `Userland/compiler/`, which still holds a copy until Userland's `main` restarts (G-0013); its first working build is Kernel's `just comp`, moved at T1. |
-| `OS/` | `EmiBSD/OS` | **Planned**, created at the first release: the pins of Kernel, Userland and DevTools, the install sets, the installer and media, the smokes of the whole system, the `YEAR.MONTH` tag. |
+| `OS/` | `EmiBSD/OS` | The assembly and the releases: `MANIFEST.toml` pins one commit of Kernel, Userland and DevTools and records the shared OpenBSD pin; the recipes fetch, delegate the builds, assemble the sets and media, boot and tag `YEAR.MONTH`. Builds nothing of its own. Created 2026-10-31 (G-0012); milestones R0..R2. |
 
 Forks in the organisation (`OpenBSD-src`, `rust`, `llvm-project` from rust-lang, `cargo`) are
 read-only mirrors: no commit of ours lands on them, only the upstream tags the pins name; our
@@ -50,11 +50,10 @@ patches live in the consuming repository's `patches/`.
 
 ## Loose files in the workspace
 
-Beside the clones, not part of any repository, not to be committed anywhere: `presentaciones/` and `EmiBSD.pptx` (decks),
-`documentacion/` (external reports), the OWASP ZAP scans of www.emibsd.org (see the
-`portal-security-scans` memory), `rust-osdev-homepage/` (the newsletter fork). `zuliprc` is the API credential for
-rust-osdev.zulipchat.com: never read its key into a reply, never commit it, never send it
-anywhere. `renta4.zip` is unrelated to EmiBSD; leave it alone.
+Beside the clones sit files of the maintainer's that belong to no repository (decks, external
+reports, scans, credentials for the project's accounts). They are listed in
+`../workspace.local.md`, which is not in any repository. None of them is ever committed,
+read into a reply or sent anywhere; a credential file is never opened.
 
 ## Invariants, compressed (`docs/invariants.md` has the reasons)
 

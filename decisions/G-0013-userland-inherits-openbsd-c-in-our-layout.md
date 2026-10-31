@@ -75,6 +75,6 @@ it has no home of its own and no order.
    builds, in the new layout, booting Kernel's smokes.
 
 ## Sources
-The maintainer, 2026-10-31 ("no quiero heredar el desastre de OpenBSD ... lo nuestro está
-súper clasificado"); `Userland/tools/layout.py` (`LAYOUT`, `SOURCE_DIR`, `IMPORTED`);
+The maintainer, 2026-10-31: the order is the thing to keep, OpenBSD's tree grew by accretion and
+ours classifies every program by purpose; `Userland/tools/layout.py` (`LAYOUT`, `SOURCE_DIR`, `IMPORTED`);
 `Kernel/tools/xtask/src/userland.rs` and `bsdmake.rs`; `Kernel/reference/PINNED.md`.

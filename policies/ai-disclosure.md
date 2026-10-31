@@ -17,8 +17,8 @@ otherwise. This is stated on the site, in every README and in every post about t
 - A post on a forum is written by the maintainer, never generated, states the process in its
   first lines, and asks a concrete technical question (the Rust users forum treats pasted LLM
   text as spam).
-- Funding sources whose policies exclude generative-AI projects are not applied to; the
-  exclusions found are recorded in the maintainer's notes, not argued with.
+- Funding is sought only where the process described here is acceptable to the funder; where a
+  policy excludes it, the project does not apply and does not argue.
 
 ## What the process does not claim
 That the code is correct because a model wrote it. The claim is narrower: where

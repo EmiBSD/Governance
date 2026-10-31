@@ -10,7 +10,9 @@ The question was whether to version them, and where: the workspace root as a rep
 holds four clones), a sibling folder, or the organisation's `.github` repository.
 
 ## Decision
-A sibling repository, `EmiBSD/Governance`, cloned as `Governance/` beside the others. The
+A sibling repository, `EmiBSD/Governance`, cloned as `Governance/` beside the others; private
+at creation, public since 2026-10-31 (the rules the agents work under are public,
+`policies/ai-disclosure.md`), after the workspace's personal notes moved out of it. The
 workspace root stays a plain folder and reads the repository's `CLAUDE.md` and `.claude/`
 through symbolic links. It holds the invariants, the process, the architecture of the
 repositories, the roadmap across them, this decision log and the policies. `.github` keeps the
