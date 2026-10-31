@@ -2,8 +2,9 @@
 
 The organisation [github.com/EmiBSD](https://github.com/EmiBSD) holds two kinds of
 repository: **forks**, read-only mirrors of the upstreams the project builds from, and
-**repositories**, where the work happens. Working draft of 2026-10-31; DevTools and OS are
-proposed, not yet decided (the open decisions are at the end).
+**repositories**, where the work happens. Working draft of 2026-10-31; DevTools and OS
+(G-0012) and Userland's turn to inherited C (G-0013) are proposed, not yet decided (the open
+decisions are at the end).
 
 ## Target layout
 
@@ -21,7 +22,7 @@ flowchart LR
         direction LR
         dev["DevTools<br/>clang, lld, libc++, compiler-rt<br/>rustc, cargo, std"]
         lz["LandingZone<br/>the 1:1 port of the kernel"]
-        ul["Userland<br/>programs and libc of our own"]
+        ul["Userland<br/>OpenBSD's C in our layout<br/>(inherited, imported, written)"]
         k["Kernel<br/>the redesign in four crates"]
         os["OS<br/>pins + sets + installer + release"]
     end
@@ -32,12 +33,14 @@ flowchart LR
     cargo -- "submodule src/tools/cargo" --> dev
 
     obsd -- "the kernel's specification" --> lz
-    obsd -- "behaviour reference<br/>+ imports (ssh, LibreSSL, ...)" --> ul
+    obsd -- "the base system's C at the pin<br/>+ imports (ssh, LibreSSL, ...)" --> ul
     lz -- "inherited tree (bsd/), lz-sync" --> k
+    lz -. "the pin" .-> ul
+    k -. "ABI headers, once abi exports them" .-> ul
 
-    dev -- "cross toolchain" --> ul
+    dev -- "clang now; rustc for the written programs" --> ul
     dev -- "clang today, rustc when self-hosted" --> k
-    ul -. "sysroot: libc, crt, headers<br/>(OpenBSD's libc until then)" .-> dev
+    ul -. "sysroot: libc, crt, headers" .-> dev
 
     k --> os
     ul --> os
@@ -52,13 +55,15 @@ publishes their state; neither feeds a build.
 | From | To | What flows | Why |
 |---|---|---|---|
 | OpenBSD-src | LandingZone | the C under `sys/`, read-only, at the pin | the specification of the port |
-| OpenBSD-src | Userland | manuals and code as the behaviour reference; the imported programs' sources | written programs come from a specification written against OpenBSD; imported ones are compiled from it |
+| OpenBSD-src | Userland | the base system's C (`bin`, `sbin`, `usr.bin`, `usr.sbin`, `libexec`, `lib`, `include`, `etc`, `share/mk`) at LandingZone's pin, placed in our layout by `layout.toml`; the imported programs' sources | G-0013: the code is OpenBSD's, the order is ours; `gnu/` excluded |
+| LandingZone | Userland (dotted) | the pin, nothing else | one owner of the pin: it fixes the ABI the kernel implements; Userland refuses to build if its pin differs from Kernel's. LandingZone holds no userland code |
+| Kernel | Userland (dotted, later) | the ABI headers (`sys/*.h`, `machine/*.h`) exported from the `abi` crate | today they come from OpenBSD's `sys/` at the same pin, byte-identical by invariant 2 |
 | OpenBSD-src | DevTools | `gnu/llvm`, `gnu/usr.bin/clang`, `gnu/lib/libcxx*`, `libclang_rt`, `libcompiler_rt` | the system's clang, lld and libc++ are OpenBSD's LLVM 18 with its patches (RETGUARD, `-fret-clean`, the fixed X18, BTI and PAC defaults) |
 | rust, llvm-project, cargo | DevTools | rust-lang/rust at the pinned stable tag with its two submodules | rustc 1.98.1 needs LLVM 21 and builds the one in its submodule; OpenBSD's 18 stays for the C. Two LLVMs, decided 2026-10-23 |
 | LandingZone | Kernel | the tree at `lz-origin`, then every commit triaged as `lz-sync:` | Kernel redesigns what LandingZone ported; LandingZone never learns Kernel exists |
-| DevTools | Userland | the cross toolchain for `aarch64-unknown-openbsd` | Userland's programs are built with it, on the host first |
+| DevTools | Userland | OpenBSD's clang, lld and libc++ now; the Rust cross toolchain for `aarch64-unknown-openbsd` when a written program exists | the inherited C is built with the same compiler OpenBSD builds it with |
 | DevTools | Kernel | clang today (`just comp`, for the inherited userland the smokes boot); rustc once EmiBSD hosts its own build | the kernel itself needs only a stock stable toolchain, its target is `aarch64-unknown-none-softfloat` |
-| Userland | DevTools (dotted) | the sysroot: libc, crt, headers | a binary the toolchain produces needs a libc; `std`'s rlibs are compiled without one, so the cycle breaks there. Until Userland has `lib/libc`, the sysroot is the libc of the OpenBSD sets Kernel already boots |
+| Userland | DevTools (dotted) | the sysroot: libc, crt, headers | a binary the toolchain produces needs a libc; with G-0013 it is OpenBSD's libc from Userland's own tree from day one. `std`'s rlibs are compiled without one, so the cycle breaks there |
 | Kernel, Userland, DevTools | OS | a kernel image, the installed tree, the comp set | OS assembles and releases; it builds nothing of its own |
 
 ## Today
@@ -76,13 +81,13 @@ flowchart LR
     subgraph repos["Repositories"]
         direction LR
         lz["LandingZone"]
-        k["Kernel<br/>just comp builds OpenBSD's clang"]
-        ul["Userland<br/>compiler/llvm, compiler/rust: pins written, nothing built<br/>distrib/: sets and installer, skeletons"]
+        k["Kernel<br/>just comp builds OpenBSD's clang<br/>xtask userland builds 110 OpenBSD programs + the ramdisk"]
+        ul["Userland<br/>the Rust proof of concept: ls, cp designed<br/>layout.py maps all 518 OpenBSD program dirs<br/>compiler/: pins written, nothing built"]
     end
 
     obsd --> lz
     obsd --> ul
-    obsd -- "gnu/llvm" --> k
+    obsd -- "gnu/llvm, and bin, sbin, lib, ... for xtask userland" --> k
     rust -- "UPSTREAM.toml" --> ul
     llvmrs -- "UPSTREAM.toml" --> ul
     cargo -- "UPSTREAM.toml" --> ul
@@ -93,6 +98,9 @@ The pins are consistent: `Userland/compiler/rust/UPSTREAM.toml` names the `llvm-
 `cargo` commits that rust's tag 1.98.1 carries as submodules, and both exist in the mirrors.
 
 - **DevTools** is `Userland/compiler/` and Kernel's `just comp` moved to their own repository.
+- **Userland after G-0013** is Kernel's `xtask userland` and `bsdmake.rs` given a home, with
+  the C placed where `layout.py` already says, and the Rust proof of concept parked in the
+  `experimental` branch.
 - **OS** is the images and ISO of Kernel's xtask, `Userland/distrib/` and `regress/harness`
   gathered in one place.
 
@@ -102,16 +110,20 @@ The pins are consistent: `Userland/compiler/rust/UPSTREAM.toml` names the `llvm-
 flowchart TB
     T0["T0 · the DevTools repository<br/>moves Userland/compiler/, copies upstream.py,<br/>a recipe that pushes only the pinned tags to the mirrors"]
     T1["T1 · OpenBSD's LLVM 18 built from DevTools<br/>moves Kernel's just comp<br/>proof: Kernel's smoke-install with that clang"]
-    T2["T2 · rustc 1.98.1 with x.py, macOS host,<br/>target aarch64-unknown-openbsd, OpenBSD's sysroot<br/>proof: a static Rust hello under Kernel in QEMU,<br/>then Userland's ls and cp"]
+    U1["U1 · Userland: experimental branch, layout.toml,<br/>the materialiser, the build driver from Kernel<br/>proof: the 110 programs in the new layout boot Kernel's smokes"]
+    U2["U2 · Userland: the other 408 directories build;<br/>base and comp sets from distrib/"]
+    T2["T2 · rustc 1.98.1 with x.py, macOS host,<br/>target aarch64-unknown-openbsd, Userland's sysroot<br/>proof: a static Rust hello under Kernel in QEMU;<br/>needed only when a written program exists"]
     T3["T3 · GitHub releases: one tarball per host + sha256<br/>version 1.98.1+emibsd.1; Userland runs just toolchain<br/>cve.py watches llvm and rust"]
     T4["T4 · self-hosting: rustc built on EmiBSD<br/>stage0 = T3; after N9"]
     R0["OS · created when Userland has a bootable base set<br/>manifest of pins (Kernel, Userland, DevTools),<br/>sets, installer, smokes of the whole system,<br/>diff-openbsd, the YEAR.MONTH tag, the Portal's status.json"]
 
-    T0 --> T1 --> T2 --> T3 --> T4
-    T3 -.-> R0
+    T0 --> T1 --> U1 --> U2 --> R0
+    T1 --> T3 --> T4
+    U2 -.-> T2
 ```
 
-T2 is the day EmiBSD runs code of its own on a kernel of its own; it deserves a devlog entry.
+U1 is the day the system boots from Userland's tree instead of Kernel's build; T2 is the day
+a program written for EmiBSD runs on its kernel. Both deserve a devlog entry.
 
 ## Rules the layout implies
 
@@ -130,3 +142,5 @@ T2 is the day EmiBSD runs code of its own on a kernel of its own; it deserves a 
 4. Kernel's `just comp` moves to DevTools now.
 5. Hosts: macOS arm64 first; Linux x86_64 only if Userland's CI needs it; arm64 OpenBSD at T4.
 6. OS now or at the first release; its name: OS, Release or System.
+7. G-0013's four: the inherited C committed or fetched; Kernel keeps its own userland build
+   until N9; Perl in or out; Userland's milestone letter and its first milestone.

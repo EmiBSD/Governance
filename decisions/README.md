@@ -39,3 +39,4 @@ Date: YYYY-MM-DD · Status: proposed | accepted | superseded by G-MMMM · Binds:
 | G-0010 | 2026-10-25 | accepted | The reference is read to write the specification and to settle gaps, never copied |
 | G-0011 | 2026-10-31 | accepted | A Governance repository holds what crosses repositories |
 | G-0012 | 2026-10-31 | proposed | DevTools and OS as repositories |
+| G-0013 | 2026-10-31 | proposed | Userland inherits OpenBSD's C in our layout; the Rust rewrite moves to `experimental` |

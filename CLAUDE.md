@@ -52,8 +52,7 @@ patches live in the consuming repository's `patches/`.
 
 Beside the clones, not part of any repository, not to be committed anywhere: `presentaciones/` and `EmiBSD.pptx` (decks),
 `documentacion/` (external reports), the OWASP ZAP scans of www.emibsd.org (see the
-`portal-security-scans` memory), `rust-osdev-homepage/` (the newsletter fork), `arquitectura-gh.md`
-(the Spanish draft `docs/architecture.md` came from). `zuliprc` is the API credential for
+`portal-security-scans` memory), `rust-osdev-homepage/` (the newsletter fork). `zuliprc` is the API credential for
 rust-osdev.zulipchat.com: never read its key into a reply, never commit it, never send it
 anywhere. `renta4.zip` is unrelated to EmiBSD; leave it alone.
 

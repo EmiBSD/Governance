@@ -8,14 +8,14 @@ Portal's `_data/status.json`); this page is the view across them.
 flowchart LR
     P1["Phase 1 · LandingZone<br/>M0..M16 met, keeps porting<br/>(drivers, platforms)"]
     P2["Phase 2 · Kernel<br/>N0..N4 met · N5 VFS in progress<br/>N6 net · N7 devices · N8 security<br/>N9 bsd/ deleted · N10 amd64<br/>N11 verification · N12 performance"]
-    P3["Phase 3 · Userland<br/>ls, cp designed · the rest planned<br/>libc, rtld, the imports"]
+    P3["Phase 3 · Userland (G-0013 proposed)<br/>U1 the 110 programs in our layout<br/>U2 the whole base system builds<br/>written programs one at a time"]
     PT["DevTools (proposed)<br/>T0 repo · T1 clang · T2 rustc cross<br/>T3 releases · T4 self-hosted"]
     PR["OS (proposed)<br/>R0 at the first bootable base set<br/>YEAR.MONTH releases"]
 
     P1 -- "lz-sync, continuous" --> P2
     P2 -- "N9: a kernel with no inherited tree" --> PR
     P3 -- "a bootable base set" --> PR
-    PT -- "T2: Userland runs on Kernel" --> P3
+    PT -- "T1: clang" --> P3
     PT -- "T4 after N9" --> P2
 ```
 
@@ -44,13 +44,14 @@ every commit is triaged into Kernel as `lz-sync:`.
 | N11 Verification | semantic `unsafe` count, idiomaticity, OpenBSD's regress | |
 | N12 Performance | the slowdowns left open after N3 | started early |
 
-## Phase 3: Userland
+## Phase 3: Userland (U, proposed in G-0013)
 
-Written from scratch under `docs/PROGRAM.md`. `ls` and `cp` designed and being implemented on
-the shared crates `cli` and `sys`; every other program of the base system listed as planned in
-`catastro.md`. The milestones that matter across repositories, in order: the first program
-runs on Kernel (needs DevTools T2); `lib/libc` and `libexec/rtld` (DevTools' sysroot becomes
-ours); a bootable `base` set (OS is created); the inherited base system no longer needed.
+Until G-0013 is decided, Userland is the Rust proof of concept: `ls` and `cp` designed on the
+shared crates `cli` and `sys`, the rest planned in `catastro.md`. Under G-0013 it becomes
+OpenBSD's base system in our layout, three classes (inherited, imported, written), and its
+milestones are: U1 the 110 programs Kernel builds today, in the new layout, booting Kernel's
+smokes (needs DevTools T1); U2 the whole base system builds, `base` and `comp` sets from
+`distrib/` (OS is created); then written programs one at a time, each needing DevTools T2.
 
 ## DevTools (T, proposed)
 
