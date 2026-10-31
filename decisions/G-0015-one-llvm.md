@@ -1,4 +1,4 @@
-# G-0015: One LLVM, OpenBSD's, for the C and for rustc
+# G-0015: One LLVM, the fork at upstream 22.1.6 with OpenBSD's patches, for the C and for rustc
 
 Date: 2026-10-31 · Status: accepted · Binds: DevTools, Userland, Kernel
 

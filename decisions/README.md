@@ -41,4 +41,4 @@ Date: YYYY-MM-DD · Status: proposed | accepted | superseded by G-MMMM · Binds:
 | G-0012 | 2026-10-31 | proposed | DevTools and OS as repositories |
 | G-0013 | 2026-10-31 | proposed | Userland inherits OpenBSD's C in our layout; the Rust rewrite moves to `experimental` |
 | G-0014 | 2026-10-31 | proposed | LandingZone may name what grows from it, in its README only |
-| G-0015 | 2026-10-31 | accepted | One LLVM, OpenBSD's (22.1.6 at the pin), for the C and for rustc |
+| G-0015 | 2026-10-31 | accepted | One LLVM, the fork at upstream 22.1.6 with OpenBSD's patches; OpenBSD's tree is no longer a source |
