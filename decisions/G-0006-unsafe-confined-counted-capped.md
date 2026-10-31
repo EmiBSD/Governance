@@ -14,7 +14,7 @@ program and `cli` forbid; `unsafe` only in `lib/crates/sys`, `lib/libc` and `lib
 site proven.
 
 ## Consequences
-`cargo xtask unsafe-report --check` in CI; the figures on the Portal's Status page; progress
+`cargo xtask unsafe-report --check` in CI; the figures on the Website's Status page; progress
 measured first as `unsafe` removed. `docs/invariants.md`, 4.
 
 ## Sources

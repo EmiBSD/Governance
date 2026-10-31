@@ -16,8 +16,14 @@ repository assembling Kernel and Userland. `docs/architecture.md` is the worked 
    installer, the smokes of the whole system, the `YEAR.MONTH` tag.
 3. Forks stay read-only mirrors; patches live in the consuming repository.
 
+## Decided so far
+- 2026-10-31: the name is **DevTools**; the repository `EmiBSD/DevTools` was created by the
+  maintainer and T0 started the same day (the pins copied from `Userland/compiler/`, the
+  tools, the mirror check). `Userland/compiler/` is removed when Userland's `main` restarts
+  under G-0013, not before.
+
 ## Open (the maintainer's)
-The name (DevTools or Toolchain), the scope (lldb?), hosts, and when OS is created. Listed at
+The scope (lldb?), hosts, and when OS is created. Listed at
 the end of `docs/architecture.md`. This file becomes `accepted` with the answers recorded.
 
 ## Sources

@@ -20,7 +20,7 @@ flowchart LR
 
     subgraph repos["Repositories"]
         direction LR
-        dev["DevTools<br/>clang, lld, libc++, compiler-rt<br/>rustc, cargo, std"]
+        dev["DevTools (T0)<br/>clang, lld, libc++, compiler-rt<br/>rustc, cargo, std"]
         lz["LandingZone<br/>the 1:1 port of the kernel"]
         ul["Userland<br/>OpenBSD's C in our layout<br/>(inherited, imported, written)"]
         k["Kernel<br/>the redesign in four crates"]
@@ -47,7 +47,7 @@ flowchart LR
     dev -- "the comp set" --> os
 ```
 
-Governance and Portal are not in the picture: Governance binds every repository and Portal
+Governance and Website are not in the picture: Governance binds every repository and Website
 publishes their state; neither feeds a build.
 
 ### Every arrow
@@ -115,7 +115,7 @@ flowchart TB
     T2["T2 · rustc 1.98.1 with x.py, macOS host,<br/>target aarch64-unknown-openbsd, Userland's sysroot<br/>proof: a static Rust hello under Kernel in QEMU;<br/>needed only when a written program exists"]
     T3["T3 · GitHub releases: one tarball per host + sha256<br/>version 1.98.1+emibsd.1; Userland runs just toolchain<br/>cve.py watches llvm and rust"]
     T4["T4 · self-hosting: rustc built on EmiBSD<br/>stage0 = T3; after N9"]
-    R0["OS · created when Userland has a bootable base set<br/>manifest of pins (Kernel, Userland, DevTools),<br/>sets, installer, smokes of the whole system,<br/>diff-openbsd, the YEAR.MONTH tag, the Portal's status.json"]
+    R0["OS · created when Userland has a bootable base set<br/>manifest of pins (Kernel, Userland, DevTools),<br/>sets, installer, smokes of the whole system,<br/>diff-openbsd, the YEAR.MONTH tag, the Website's status.json"]
 
     T0 --> T1 --> U1 --> U2 --> R0
     T1 --> T3 --> T4
@@ -136,7 +136,7 @@ a program written for EmiBSD runs on its kernel. Both deserve a devlog entry.
 
 ## Open decisions (the maintainer's)
 
-1. Name: DevTools or Toolchain. If lldb is in, DevTools; if only compilers and `std`, Toolchain.
+1. ~~Name~~: DevTools, decided 2026-10-31; the repository exists.
 2. Scope of DevTools: clang, lld, libc++, compiler-rt, rustc, cargo, std. lldb?
 3. `compiler/` leaves Userland entirely; `distrib/sets` lists the comp set from DevTools' artifacts.
 4. Kernel's `just comp` moves to DevTools now.

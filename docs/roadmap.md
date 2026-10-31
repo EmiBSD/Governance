@@ -2,7 +2,7 @@
 
 State as of 2026-10-31. Each repository keeps the authoritative detail (LandingZone's
 `README.md`, Kernel's `docs/ROADMAP.md` and `docs/STATUS.md`, Userland's `catastro.md`,
-Portal's `_data/status.json`); this page is the view across them.
+Website's `_data/status.json`); this page is the view across them.
 
 ```mermaid
 flowchart LR
@@ -63,6 +63,6 @@ releases, T4 self-hosted. Detail in `docs/architecture.md`.
 Created at the first bootable base set. Each release is a `YEAR.MONTH` tag over a manifest of
 pins, with the sets, the media, the smokes of the whole system and `diff-openbsd` green.
 
-## Portal
+## Website
 
 Follows the rest: `status.json` at every milestone, a devlog entry at every close and at T2.

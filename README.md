@@ -47,7 +47,7 @@ flowchart LR
     dev --> os
 ```
 
-[`docs/architecture.md`](docs/architecture.md) explains every arrow. [Portal](https://github.com/EmiBSD/Portal)
+[`docs/architecture.md`](docs/architecture.md) explains every arrow. [Website](https://github.com/EmiBSD/Website)
 is the public site and [`.github`](https://github.com/EmiBSD/.github) holds the organisation
 profile and the community health files (security policy, contributing).
 

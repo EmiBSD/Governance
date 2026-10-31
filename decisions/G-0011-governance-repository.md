@@ -14,7 +14,7 @@ A sibling repository, `EmiBSD/Governance`, cloned as `Governance/` beside the ot
 workspace root stays a plain folder and reads the repository's `CLAUDE.md` and `.claude/`
 through symbolic links. It holds the invariants, the process, the architecture of the
 repositories, the roadmap across them, this decision log and the policies. `.github` keeps the
-organisation profile and the community health files; Portal publishes.
+organisation profile and the community health files; Website publishes.
 
 ## Consequences
 What is decided here binds the other repositories; each cites a decision as `G-NNNN`. The

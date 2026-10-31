@@ -40,7 +40,7 @@ to route around.
 
 Each repository numbers its own: M in LandingZone, N in Kernel, T proposed for DevTools, R for
 OS releases (`docs/roadmap.md`). A milestone opens with a plan the maintainer approves, runs as
-slices, and closes with the smokes, `diff-openbsd` and a tag; the Portal's Status page and the
+slices, and closes with the smokes, `diff-openbsd` and a tag; the Website's Status page and the
 devlog follow.
 
 ## Decisions

@@ -1,6 +1,6 @@
 # G-0013: Userland inherits OpenBSD's C in our layout; the Rust rewrite moves to `experimental`
 
-Date: 2026-10-31 · Status: proposed · Binds: Userland, Kernel, DevTools, OS, Portal
+Date: 2026-10-31 · Status: proposed · Binds: Userland, Kernel, DevTools, OS, Website
 
 ## Context
 G-0009 made Userland a from-scratch Rust system under one contract. After a week the
@@ -50,7 +50,7 @@ it has no home of its own and no order.
    the rest are decided piece by piece. OpenBSD's `regress/` stays out of the tree and is
    brought per program when needed.
 7. **Public wording** changes the same day: Userland's README and GitHub description, the
-   Portal, this repository's `CLAUDE.md` and `docs/`. Userland is to the userland what
+   the Website, this repository's `CLAUDE.md` and `docs/`. Userland is to the userland what
    LandingZone is to the kernel: OpenBSD's code in an order of our own, the base the rewrite
    grows from.
 
