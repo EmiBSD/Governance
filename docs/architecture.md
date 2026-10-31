@@ -138,7 +138,7 @@ a program written for EmiBSD runs on its kernel. Both deserve a devlog entry.
 1. ~~Name~~: DevTools, decided 2026-10-31; the repository exists.
 2. Scope of DevTools: clang, lld, libc++, compiler-rt, rustc, cargo, std. lldb?
 3. `compiler/` leaves Userland entirely; `distrib/sets` lists the comp set from DevTools' artifacts.
-4. Kernel's `just comp` moves to DevTools now.
+4. ~~Kernel's `just comp` moves to DevTools now~~: it stays Kernel's; DevTools builds upstream LLVM with CMake (G-0015, 2026-10-31).
 5. Hosts: macOS arm64 first; Linux x86_64 only if Userland's CI needs it; arm64 OpenBSD at T4.
 6. ~~OS now or at the first release~~: now, as `OS`, decided 2026-10-31; the repository exists.
 7. G-0013's four: the inherited C committed or fetched; Kernel keeps its own userland build

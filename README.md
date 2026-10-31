@@ -46,7 +46,6 @@ flowchart LR
         k["Kernel"]
         os["OS"]
     end
-    obsd --> dev
     rust --> dev
     llvmrs --> dev
     cargo --> dev
