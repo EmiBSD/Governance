@@ -53,6 +53,7 @@ flowchart LR
     obsd --> ul
     lz --> k
     lz -. pin .-> ul
+    dev --> lz
     dev --> ul
     dev --> k
     k --> os

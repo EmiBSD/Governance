@@ -81,7 +81,7 @@ milestone left open.
 OpenBSD feeds LandingZone, Userland and DevTools. LandingZone feeds Kernel; Kernel reads it
 and never writes to it, and nothing in LandingZone's code, rules or agents names Kernel or
 adapts to it. Its README alone may say what grows from it (G-0002, relaxed in that one point
-on 2026-10-31). DevTools feeds Userland, Kernel and OS and knows nothing of their internals: it
+on 2026-10-31). DevTools feeds LandingZone, Kernel, Userland and OS and knows nothing of their internals: it
 takes a sysroot as an input. Kernel and Userland feed OS (`docs/architecture.md`).
 
 **Why:** the port stays a faithful port, checkable against the C alone; the toolchain stays

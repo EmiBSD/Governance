@@ -4,7 +4,7 @@ The organisation [github.com/EmiBSD](https://github.com/EmiBSD) holds two kinds 
 repository: **forks**, read-only mirrors of the upstreams the project builds from, and
 **repositories**, where the work happens. This page is the view across them: which feeds
 which, and why. What happens inside a repository is described in that repository, not here.
-State as of 2026-10-31.
+State as of 2026-11-01.
 
 ## The layout
 
@@ -39,6 +39,7 @@ flowchart LR
     lz -. "the pin" .-> ul
     k -. "the ABI headers, once abi exports them" .-> ul
 
+    dev -- "the toolchain" --> lz
     dev -- "the toolchain" --> ul
     dev -- "the toolchain" --> k
     ul -. "the sysroot" .-> dev
@@ -61,7 +62,7 @@ publishes their state; neither feeds a build.
 | Kernel | Userland (dotted, later) | the ABI headers exported from the `abi` crate | today they come from OpenBSD's `sys/` at the same pin, byte-identical by invariant 2 |
 | the forks of rust-lang and LLVM | DevTools | the pinned upstream tags | the only inputs of DevTools; nothing comes from OpenBSD |
 | LandingZone | Kernel | the tree at `lz-origin`, then every commit triaged as `lz-sync:` | Kernel redesigns what LandingZone ported; LandingZone never learns Kernel exists |
-| DevTools | Userland, Kernel | the toolchain, by pin and checksum | one toolchain for the whole system |
+| DevTools | LandingZone, Kernel, Userland | the toolchain, by pin and checksum | one toolchain for the whole system, the port included (since 2026-11-01) |
 | Userland | DevTools (dotted) | the sysroot: libc, crt, headers | a binary the toolchain produces needs a libc; `std`'s rlibs are compiled without one, so the cycle breaks there |
 | Kernel, Userland, DevTools | OS | a kernel image, the base sets, the comp set | OS assembles and releases; it builds nothing of its own |
 
